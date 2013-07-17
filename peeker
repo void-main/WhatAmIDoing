@@ -5,6 +5,16 @@ require 'fileutils'
 
 FIVE_MINUTES = 5 * 60
 
+puts `uname`.strip == 'Darwin'
+if `uname`.strip == 'Darwin'
+	base_path = File.expand_path ".", "vendor/imagesnap"
+	command = "#{base_path} -1"
+else
+	command = File.expand_path ".", "vendor/CommandCam.exe"
+end
+
+puts command
+
 while true
 	now = Time.new
 	path = File.expand_path ".", "#{now.year}/#{now.month}/#{now.day}"
@@ -14,7 +24,8 @@ while true
 	hour_str = "0" * (2 - now.hour.to_s.length) + now.hour.to_s
 	min_str  = "0" * (2 - now.min.to_s.length) + now.min.to_s
 	image_name = "#{path}/#{hour_str}#{min_str}.jpg"
-	puts `./imagesnap -1 #{image_name}`
+	puts "#{command} #{image_name}"
+	puts `#{command} #{image_name}`
 
 	sleep FIVE_MINUTES
 end
