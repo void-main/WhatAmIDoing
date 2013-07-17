@@ -17,7 +17,7 @@ puts command
 
 while true
 	now = Time.new
-	path = File.expand_path ".", "#{now.year}/#{now.month}/#{now.day}"
+	path = File.expand_path ".", "images/#{now.year}/#{now.month}/#{now.day}"
 	puts path
 	FileUtils::mkdir_p path unless File.directory? path
 
