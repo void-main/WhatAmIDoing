@@ -5,7 +5,6 @@ require 'fileutils'
 
 FIVE_MINUTES = 5 * 60
 
-puts `uname`.strip == 'Darwin'
 if `uname`.strip == 'Darwin'
 	base_path = File.expand_path ".", "vendor/imagesnap"
 	command = "#{base_path} -1"
@@ -13,18 +12,14 @@ else
 	command = File.expand_path ".", "vendor/CommandCam.exe"
 end
 
-puts command
-
 while true
 	now = Time.new
 	path = File.expand_path ".", "images/#{now.year}/#{now.month}/#{now.day}"
-	puts path
 	FileUtils::mkdir_p path unless File.directory? path
 
 	hour_str = "0" * (2 - now.hour.to_s.length) + now.hour.to_s
 	min_str  = "0" * (2 - now.min.to_s.length) + now.min.to_s
 	image_name = "#{path}/#{hour_str}#{min_str}.jpg"
-	puts "#{command} #{image_name}"
 	puts `#{command} #{image_name}`
 
 	sleep FIVE_MINUTES
